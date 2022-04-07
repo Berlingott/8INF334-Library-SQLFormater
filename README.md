@@ -8,3 +8,6 @@ Réalisation d'une librairie en JAVA permettant de formater des requêtes SQL et
 
 # Participants
 * Simon Duchesne // Berlingot
+
+# Source
+https://www.jetbrains.com/help/idea/library.html
