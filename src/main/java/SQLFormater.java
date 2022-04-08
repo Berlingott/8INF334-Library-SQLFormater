@@ -12,15 +12,21 @@ public class SQLFormater { //singleton, une instance seule servira à gérer la 
 
     Select[] selectQuerries;
     String[] arguments;
-
     /**
-     *
+     * Tant que nous ne faisons pas de requêtes à la base de données, nous concaténons les requêtes dans cette variable
+     */
+    String FinalQuerry = "";
+    /**
+     *Créations d'une string pour la requête SELECT, crera selon al table envoté et les arguments spécifié
      *
      */
-    public void Select(String[] selectargs, Table fromtable){
+    public Select Select(String[] selectargs, Table fromtable){
         Select select = new Select(selectargs,fromtable);
-        System.out.printf(select.querryToString());
+        FinalQuerry = FinalQuerry + select.querryToString();
+        return select;
 
+        //todo changer pour que les string soit contenu dans les string en elle meme et que l'utilisateur puisse sauvegarder les element de SON côté
+        //Todo toutes les fonctions peuvent retourner de leurs côté leur objet que l'utilisateur pourra gerer
     }
     /**
      *
@@ -62,10 +68,15 @@ public class SQLFormater { //singleton, une instance seule servira à gérer la 
      *
      *
      */
-    public void RequestDatabase(){
+    public String RequestDatabase(){
        // for (int i = 0; i < querriesOrder.size() ; i++){
-            //TODO
+            String finalquerrytemp = FinalQuerry;
+            FinalQuerry = "";
+            return finalquerrytemp;
         }
 
-    //}
+    public  void AND(){
+
+    }
+
 }
