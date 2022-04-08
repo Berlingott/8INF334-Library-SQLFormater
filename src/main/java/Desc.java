@@ -1,2 +1,2 @@
-public class Desc {
+public class Desc extends Ordering {
 }
