@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="UnitTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-04-08T01:18:06" hostname="MacBook-Pro-de-Simon.local" time="0.017">
+<testsuite name="UnitTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2022-04-08T22:59:23" hostname="MacBook-Pro-de-Simon.local" time="0.032">
   <properties/>
-  <testcase name="BasicSelect_Test()" classname="UnitTest" time="0.017"/>
+  <testcase name="BasicSelectWithMoreThanTwoArg_Test()" classname="UnitTest" time="0.023"/>
+  <testcase name="SelectWithConditionWhere()" classname="UnitTest" time="0.004"/>
+  <testcase name="BasicSelect_Test()" classname="UnitTest" time="0.001"/>
+  <testcase name="CompareTable()" classname="UnitTest" time="0.0"/>
+  <testcase name="SelectWithDoubleConditionWhere()" classname="UnitTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
