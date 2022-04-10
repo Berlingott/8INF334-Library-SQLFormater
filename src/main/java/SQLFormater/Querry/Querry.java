@@ -6,6 +6,7 @@ public class Querry {
   protected Condition[] condition_array;
   protected String[] querryargs;
   protected String finalQuerry = "";
+
     public String querryToString() {
       String formatedSQLRequest = "no specified request";
       return formatedSQLRequest;
@@ -18,9 +19,6 @@ public class Querry {
     public void addToQuerry(String elementToAdd){
       finalQuerry = finalQuerry + elementToAdd;
     }
-    String requestDatabase(){
-      return finalQuerry;
-    };
 
     public Querry(){
       querrytype = querryType_enum.UNDEFINED_ERROR;

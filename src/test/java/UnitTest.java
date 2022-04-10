@@ -1,7 +1,9 @@
+import SQLFormater.Querry.Querry;
 import SQLFormater.Querry.Select;
 import SQLFormater.Querry.Table;
 import SQLFormater.SQLFormater;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 /**
  * Requête:
@@ -17,12 +19,12 @@ public class UnitTest {
     @Test
     void BasicSelect_Test() {
         String expectedResult_simpleSelect =    "SELECT(Prenom, Nom)\n" +
-                                                "From eleves";
+                                                "From eleves;";
         // Assertions.assertEquals(1,1);
         //Assertions.assertEquals(1,2); // montre une erreur, assure que le test est fonctionnel
         SQLFormater sqlformater = new SQLFormater();
-        sqlformater.Select(sqlformater.arg("Prenom", "Nom" ),sqlformater.table("eleves"));
-        Assertions.assertEquals(expectedResult_simpleSelect, sqlformater.RequestDatabase());
+        Select querry = sqlformater.Select(sqlformater.arg("Prenom", "Nom" ),sqlformater.table("eleves", sqlformater.arg("Prenom", "Nom")));
+        Assertions.assertEquals(expectedResult_simpleSelect, querry.requestQuerry());
     }
     /**
      * Requête: simple SQLFormater.Querry.Select
@@ -31,14 +33,14 @@ public class UnitTest {
      *From eleves
      */
     @Test
-    void BasicSelectWithMoreThanTwoArg_Test() {
+    void BasicSelectWithMoreThanTwoArg() {
         String expectedResult_simpleSelect =    "SELECT(Prenom, Nom, Age, Classe)\n" +
-                "From eleves";
+                "From eleves;";
         // Assertions.assertEquals(1,1);
         //Assertions.assertEquals(1,2); // montre une erreur, assure que le test est fonctionnel
         SQLFormater sqlformater = new SQLFormater();
-        sqlformater.Select(sqlformater.arg("Prenom", "Nom", "Age", "Classe" ),sqlformater.table("eleves"));
-        Assertions.assertEquals(expectedResult_simpleSelect, sqlformater.RequestDatabase());
+        Select querry = sqlformater.Select(sqlformater.arg("Prenom", "Nom", "Age", "Classe"),sqlformater.table("eleves", sqlformater.arg("Prenom", "Nom", "Age", "Classe")));
+        Assertions.assertEquals(expectedResult_simpleSelect, querry.requestQuerry());
     }
 
     /**
@@ -50,11 +52,12 @@ public class UnitTest {
      */
     @Test
     void SelectWithConditionWhere(){
-        String expectedResult_SelectWithConditionWhere =    "SELECT(Prenom, Nom)\n" +
-                                                            "From eleves\n" +
-                                                            "WHERE Nom = 'Simon'" ;
+        String expectedResult_SelectWithConditionWhere = """
+                SELECT(Prenom, Nom)
+                From eleves
+                WHERE Nom = 'Simon';""";
         SQLFormater sqlformater = new SQLFormater();
-        var querry = sqlformater.Select(sqlformater.arg("Prenom", "Nom"),sqlformater.table("eleves"));
+        var querry = sqlformater.Select(sqlformater.arg("Prenom", "Nom"),sqlformater.table("eleves", sqlformater.arg("Prenom", "Nom")));
         var wherecondition = sqlformater.Wherecon("Nom","'Simon'","=");
         querry.addToQuerry(wherecondition.get_condition());
         String request = querry.requestQuerry();
@@ -67,9 +70,31 @@ public class UnitTest {
      * SELECT(Prenom, Nom)
      * From eleves
      * WHERE Nom = 'Simon'
+     * AND
+     * WHERE Age = 26
      */
     @Test
     void SelectWithDoubleConditionWhere(){
+        String expectedResult_SelectWithDoubleConditionWhere = """
+                SELECT(eleves.Prenom, eleves.Nom, eleves.Age, eleves.Classe)
+                From eleves
+                WHERE eleves.Nom = 'Simon'
+                AND
+                WHERE Age = 26;""";
+        var sqlformater = new SQLFormater();
+
+        var tableetudiant = new Table("eleves",sqlformater.arg("Prenom", "Nom", "Age", "Classe"));
+
+        var wherecondition = sqlformater.Wherecon(tableetudiant.get_columnbyname("Nom"),"'Simon'","=");
+        var secondwherecondition = sqlformater.Wherecon(tableetudiant.get_columnbyposition(2),"26","=");
+
+        var querry = sqlformater.Select(tableetudiant.get_columns(), tableetudiant);
+        tableetudiant.get_tableName();
+        querry.addToQuerry((wherecondition.get_condition() + sqlformater.AND(secondwherecondition.get_condition())));
+
+        String request = querry.requestQuerry();
+        Assertions.assertEquals(expectedResult_SelectWithDoubleConditionWhere, request);
+
 
     }
     /**
@@ -81,5 +106,56 @@ public class UnitTest {
         SQLFormater sqlformater = new SQLFormater();
         Table expectedTable = new Table("eleves");
         Assertions.assertEquals(expectedTable.get_tableName(), sqlformater.table("eleves").get_tableName());
+    }
+    /**
+     * Requête: Test de la fonction HAVING
+     * Résultat attendu:
+     * SELECT
+     */
+    @Test
+    void SelectHavingGroupBy() {
+        String expectedResult_SelectWithhaving = """
+                SELECT(Nom, Prenom, Classe)
+                From Eleves
+                GROUP BY Classes;""";
+        var sqlformater = new SQLFormater();
+        var tableeleves = sqlformater.table("Eleves",sqlformater.arg("Prenom", "Nom", "Age", "Classe"));
+        var querry = sqlformater.Select(sqlformater.arg("Nom", "Prenom", "Classe"), tableeleves);
+        var groupbyclasse = sqlformater.groupby(sqlformater.arg("Classes"));
+            querry.addToQuerry(groupbyclasse.get_condition());
+
+        Assertions.assertEquals(expectedResult_SelectWithhaving, querry.requestQuerry());
+    }
+    /**
+     *
+     */
+    @Test
+    void SelectOrderByASC() {
+        String expectedResult_SelectWithhaving = """
+                SELECT(Nom, Prenom, Classe, Age)
+                From Eleves
+                ORDER BY Age ASC;""";
+        var sqlformater = new SQLFormater();
+        var tableeleves = sqlformater.table("Eleves",sqlformater.arg("Prenom", "Nom", "Classe", "Age"));
+        var querry = sqlformater.Select(sqlformater.arg("Nom", "Prenom", "Classe", "Age"), tableeleves);
+        querry.addToQuerry(sqlformater.asc(sqlformater.arg("Age")).get_condition());
+
+        Assertions.assertEquals(expectedResult_SelectWithhaving, querry.requestQuerry());
+    }
+    /**
+     *
+     */
+    @Test
+    void SelectOrderByDESC() {
+        String expectedResult_SelectWithhaving = """
+                SELECT(Nom, Prenom, Classe, Age)
+                From Eleves
+                ORDER BY Age DESC;""";
+        var sqlformater = new SQLFormater();
+        var tableeleves = sqlformater.table("Eleves",sqlformater.arg("Prenom", "Nom", "Classe", "Age"));
+        var querry = sqlformater.Select(sqlformater.arg("Nom", "Prenom", "Classe", "Age"), tableeleves);
+        querry.addToQuerry(sqlformater.desc(sqlformater.arg("Age")).get_condition());
+
+        Assertions.assertEquals(expectedResult_SelectWithhaving, querry.requestQuerry());
     }
 }

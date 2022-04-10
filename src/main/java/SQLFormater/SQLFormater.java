@@ -3,8 +3,6 @@ import SQLFormater.Querry.*;
 
 /**
  * classe gérant les requêtes externe à notre librairie
- *
- *
  */
 
 public class SQLFormater { //singleton, une instance seule servira à gérer la connection et ne pas faire de connection doublon
@@ -17,26 +15,29 @@ public class SQLFormater { //singleton, une instance seule servira à gérer la 
      */
     String FinalQuerry = "";
     /**
-     *Créations d'une string pour la requête SELECT, crera selon al table envoté et les arguments spécifié
+     * nom: Select(String[] selectargs, Table fromtable)
+     * Description: Créations d'une string pour la requête SELECT, crera selon al table envoté et les arguments spécifié
      *
      */
     public Select Select(String[] selectargs, Table fromtable){
         Select select = new Select(selectargs,fromtable);
-        FinalQuerry = FinalQuerry + select.querryToString();
         return select;
 
         //todo changer pour que les string soit contenu dans les string en elle meme et que l'utilisateur puisse sauvegarder les element de SON côté
         //Todo toutes les fonctions peuvent retourner de leurs côté leur objet que l'utilisateur pourra gerer
     }
     /**
-     *
-     *
+     * nom: table(String tableName, String[] columnname)
+     * Description: Permet la création d'une table par l'appel de la librairie
      */
+    public Table table(String tableName, String[] columnname){
+        return new Table(tableName, columnname);
+    }
     public Table table(String tableName){
         return new Table(tableName);
     }
+
     /**
-     *
      *
      */
     public void Concat(){
@@ -54,28 +55,26 @@ public class SQLFormater { //singleton, une instance seule servira à gérer la 
         //TODO
     }
     /**
-     *
-     *
+     * Nom: arg()
+     * Description: Permet de transformer un nombre indéfini d'argument pour les constructeur demandant un tableau de Chaine de characters
      */
-
     public String[] arg(String ... arg){
         return arg;
     }
-    /**
-     * todo may be depricated
-     * comme on va demander la querry par la querry
-     *
-     */
-    public String RequestDatabase(){
-       // for (int i = 0; i < querriesOrder.size() ; i++){
-            String finalquerrytemp = FinalQuerry;
-            FinalQuerry = "";
-            return finalquerrytemp;
-        }
 
-    public  void AND(){
-
+    public String AND(String otherelement){
+        return "\nAND" + otherelement;
     }
 
 
+    public GroupBy groupby(String[] classes) {
+        GroupBy groupby = new GroupBy(classes);
+        return groupby;
+    }
+    public Asc asc(String[] columnsname){
+        return new Asc(columnsname);
+    }
+    public Desc desc(String[] columnsname){
+        return new Desc(columnsname);
+    }
 }

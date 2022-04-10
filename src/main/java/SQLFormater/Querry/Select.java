@@ -1,10 +1,6 @@
 package SQLFormater.Querry;
 
 public class Select extends Querry{
-
-
-
-
     //constructor
     public Select(String[] selectargs, Table fromtable){
         querrytype = querryType_enum.SELECT;
@@ -14,6 +10,10 @@ public class Select extends Querry{
     }
 
     @Override
+        public String requestQuerry(){
+      return finalQuerry + ";";
+    }
+
     public String querryToString(){
         StringBuilder querrystring = new StringBuilder("SELECT(");
         for (int i=0; i<querryargs.length; i++){
@@ -26,4 +26,6 @@ public class Select extends Querry{
 
         return querrystring.toString();
     }
+
+
 }
