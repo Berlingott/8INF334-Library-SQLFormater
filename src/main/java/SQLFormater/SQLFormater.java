@@ -22,10 +22,7 @@ public class SQLFormater { //singleton, une instance seule servira à gérer la 
     public Select Select(String[] selectargs, Table fromtable){
         Select select = new Select(selectargs,fromtable);
         return select;
-
-        //todo changer pour que les string soit contenu dans les string en elle meme et que l'utilisateur puisse sauvegarder les element de SON côté
-        //Todo toutes les fonctions peuvent retourner de leurs côté leur objet que l'utilisateur pourra gerer
-    }
+ }
     /**
      * nom: table(String tableName, String[] columnname)
      * Description: Permet la création d'une table par l'appel de la librairie
@@ -41,7 +38,7 @@ public class SQLFormater { //singleton, une instance seule servira à gérer la 
      *
      */
     public void Concat(){
-        //Todo
+        //todo
     }
     /**
      *
@@ -52,7 +49,7 @@ public class SQLFormater { //singleton, une instance seule servira à gérer la 
     }
 
     public void Having(){
-        //TODO
+        //todo
     }
     /**
      * Nom: arg()
@@ -76,5 +73,17 @@ public class SQLFormater { //singleton, une instance seule servira à gérer la 
     }
     public Desc desc(String[] columnsname){
         return new Desc(columnsname);
+    }
+    public FullOuterJoin fullOuterJoin(String tablearg, String columnfirst, String columnsecond){
+        return new FullOuterJoin(tablearg,columnfirst,columnsecond);
+    }
+    public InnerJoin innerJoin(String tablearg, String columnfirst, String columnsecond){
+        return new InnerJoin(tablearg,columnfirst,columnsecond);
+    }
+    public LeftJoin leftJoin(String tablearg, String columnfirst, String columnsecond){
+        return new LeftJoin(tablearg,columnfirst,columnsecond);
+    }
+    public RightJoin rightJoin(String tablearg, String columnfirst, String columnsecond){
+        return new RightJoin(tablearg,columnfirst,columnsecond);
     }
 }

@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="UnitTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2022-04-10T01:09:07" hostname="MacBook-Pro-de-Simon.local" time="0.05">
+<testsuite name="UnitTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2022-04-10T02:17:06" hostname="MacBook-Pro-de-Simon.local" time="0.056">
   <properties/>
-  <testcase name="SelectOrderByDESC()" classname="UnitTest" time="0.034"/>
-  <testcase name="SelectWithConditionWhere()" classname="UnitTest" time="0.005"/>
-  <testcase name="BasicSelect_Test()" classname="UnitTest" time="0.001"/>
-  <testcase name="SelectOrderByASC()" classname="UnitTest" time="0.001"/>
-  <testcase name="CompareTable()" classname="UnitTest" time="0.001"/>
-  <testcase name="SelectHavingGroupBy()" classname="UnitTest" time="0.001"/>
+  <testcase name="FullOuterJoin()" classname="UnitTest" time="0.038"/>
+  <testcase name="LEFTJOIN()" classname="UnitTest" time="0.001"/>
+  <testcase name="OrderByASC()" classname="UnitTest" time="0.001"/>
+  <testcase name="OrderByDESC()" classname="UnitTest" time="0.001"/>
+  <testcase name="SelectWithConditionWhere()" classname="UnitTest" time="0.003"/>
+  <testcase name="BasicSelect_Test()" classname="UnitTest" time="0.0"/>
+  <testcase name="CompareTable()" classname="UnitTest" time="0.0"/>
+  <testcase name="RightJoin()" classname="UnitTest" time="0.001"/>
   <testcase name="BasicSelectWithMoreThanTwoArg()" classname="UnitTest" time="0.0"/>
   <testcase name="SelectWithDoubleConditionWhere()" classname="UnitTest" time="0.001"/>
+  <testcase name="InnerJoin()" classname="UnitTest" time="0.002"/>
+  <testcase name="GroupBy()" classname="UnitTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

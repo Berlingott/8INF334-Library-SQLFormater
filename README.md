@@ -11,3 +11,4 @@ Réalisation d'une librairie en JAVA permettant de formater des requêtes SQL et
 
 # Source
 https://www.jetbrains.com/help/idea/library.html
+https://www.jetbrains.com/help/idea/viewing-code-coverage-results.html#coverage-in-editor

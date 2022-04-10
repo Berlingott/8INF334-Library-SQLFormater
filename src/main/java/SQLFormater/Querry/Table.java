@@ -46,7 +46,7 @@ public class Table {
      *trouver une colonne de la table par sa position
      */
     public String get_columnbyposition(int position){
-        return columnName[position];
+        return tableName +"."+ columnName[position] ;
     }
 
     //CONSTRUCTOR
