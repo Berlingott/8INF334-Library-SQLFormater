@@ -232,6 +232,4 @@ public class UnitTest {
 
         Assertions.assertEquals(expectedResult_SelectWithhaving, querry.requestQuerry());
     }
-
-
 }

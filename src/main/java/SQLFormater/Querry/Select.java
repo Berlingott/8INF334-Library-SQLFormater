@@ -3,7 +3,6 @@ package SQLFormater.Querry;
 public class Select extends Querry{
     //constructor
     public Select(String[] selectargs, Table fromtable){
-        querrytype = querryType_enum.SELECT;
         querryargs = selectargs;
         fromTable = fromtable;
         finalQuerry = querryToString();
@@ -14,6 +13,10 @@ public class Select extends Querry{
       return finalQuerry + ";";
     }
 
+    /**
+     *
+     * @return String querrystring
+     */
     public String querryToString(){
         StringBuilder querrystring = new StringBuilder("SELECT(");
         for (int i=0; i<querryargs.length; i++){
