@@ -1,5 +1,8 @@
 package SQLFormater.Querry;
 
+/**
+ * Classe pour créer une requête SQL SELECT
+ */
 public class Select extends Querry{
     //constructor
     public Select(String[] selectargs, Table fromtable){
@@ -8,13 +11,16 @@ public class Select extends Querry{
         finalQuerry = querryToString();
     }
 
+    /**
+     * @return Retourne un String la requête SQL complète
+     */
     @Override
         public String requestQuerry(){
       return finalQuerry + ";";
     }
 
     /**
-     *
+     * Formule la requête et renvoie la requête
      * @return String querrystring
      */
     public String querryToString(){

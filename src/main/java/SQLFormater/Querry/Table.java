@@ -2,16 +2,18 @@ package SQLFormater.Querry;
 
 import java.util.Objects;
 
+/**
+ * Classe afin de contruire et enregistrer une structure pour la représentation d'une table dans une base de donnée SQL.
+ */
 public class Table {
 
     //ATTRIBUTS
-    private String tableName;
+    private final String tableName;
     private String[] columnName;
 
-
-    //METHODS
-
-    //GET SET
+    /**
+     * @return Le nom de la tabnle
+     */
     public String get_tableName(){
         return this.tableName;
     }
@@ -21,7 +23,7 @@ public class Table {
         return (tableName + "." +argName);
     }
     /**
-     *Retroune l'ensemble des colonnes de la table
+     * @return Retroune l'ensemble des colonnes de la table
      */
     public String[] get_columns(){
         String[] tmpcolumnname = columnName;

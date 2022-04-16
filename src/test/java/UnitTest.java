@@ -29,8 +29,8 @@ public class UnitTest {
     /**
      * Requête: simple SQLFormater.Querry.Select
      * Résultat attendu:
-     *SELECT(Prenom, Nom, Age, Classe)
-     *From eleves
+     * SELECT(Prenom, Nom, Age, Classe)
+     * From eleves
      */
     @Test
     void BasicSelectWithMoreThanTwoArg() {
