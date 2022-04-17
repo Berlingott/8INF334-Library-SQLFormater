@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SQLFormater.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">8INF334-SQLFormater</a> &gt; <a href="index.source.html" class="el_package">SQLFormater</a> &gt; <span class="el_source">SQLFormater.java</span></div><h1>SQLFormater.java</h1><pre class="source lang-java linenums">package SQLFormater;
+import SQLFormater.Querry.*;
+
+/**
+ * classe gérant les requêtes externe à notre librairie
+ */
+
+<span class="fc" id="L8">public class SQLFormater { //singleton, une instance seule servira à gérer la connection et ne pas faire de connection doublon</span>
+
+    Select[] selectQuerries;
+    String[] arguments;
+<span class="fc" id="L12">    String FinalQuerry = &quot;&quot;;</span>
+
+
+    /**
+     * Créations d'une string pour la requête SELECT, crera selon al table envoté et les arguments spécifié
+     * @param selectargs tableau de STRING pour les colonnes de la requête
+     * @param fromtable nom de la table de provenance de la requête SQL
+     * @return Une requête de base SELECT
+     */
+    public Select Select(String[] selectargs, Table fromtable){
+<span class="fc" id="L22">        return new Select(selectargs,fromtable);</span>
+ }
+
+    /**
+     * Permet la création de table
+     * @param tableName nom de la table a créer
+     * @param columnname noms des colonnes de la table
+     * @return un objet table
+     */
+    public Table table(String tableName, String[] columnname){
+<span class="fc" id="L32">        return new Table(tableName, columnname);</span>
+    }
+    public Table table(String tableName){
+<span class="fc" id="L35">        return new Table(tableName);</span>
+    }
+
+    /**
+     * Permet la construction d'une condition WHERE
+     * @param firstatt premiere variable de la condition where
+     * @param secondatt seconde variable de la condition where
+     * @param operante operand de la condition where
+     * @return un objet Where
+     */
+    public Where Wherecon(String firstatt, String secondatt, String operante){
+<span class="fc" id="L46">        return new Where(firstatt, secondatt, operante);</span>
+    }
+
+    /**
+     * fonction pouvant être speller afin de mettre un nombre non défini d'arguments dans d'autres requêtes.
+     * @param arg string, en nombre non défini ex: &quot;string1&quot;,&quot;string2&quot;,&quot;String3&quot;
+     * @return les strings données dans un tableau
+     */
+    public String[] arg(String ... arg){
+<span class="fc" id="L55">        return arg;</span>
+    }
+
+    /**
+     *fonction pour ajouter un AND
+     * @param otherelement element a concaténé avec AND
+     * @return string formulé
+     */
+
+    public String AND(String otherelement){
+<span class="fc" id="L65">        return &quot;\nAND&quot; + otherelement;</span>
+    }
+
+    /**
+     * Fonction pour ajouter un argument GroupBy dans la requête SQL.
+     * @param classes classe à grouper
+     * @return retourne un string formuler de l'argument
+     */
+    public GroupBy groupby(String[] classes) {
+<span class="fc" id="L74">        return new GroupBy(classes);</span>
+    }
+
+    /**
+     * Fonction appeller pour cree et ajouter un argument ASC à la requête SQL.
+     * @param columnsname nom de la colonne pour le tri
+     * @return Retourne la fonction
+     */
+    public Asc asc(String[] columnsname){
+<span class="fc" id="L83">        return new Asc(columnsname);</span>
+    }
+
+    /**
+     * Fonction appeller pour cree et ajouter un argument DESC à la requête SQL.
+     * @param columnsname nom de la colonne pour le tri
+     * @return Retourne la fonction
+     */
+    public Desc desc(String[] columnsname){
+<span class="fc" id="L92">        return new Desc(columnsname);</span>
+    }
+
+    /**
+     * Fonction appeller pour cree et ajouter un argument DESC à la requête SQL.
+     * @param tablearg arguments  de la table a join
+     * @param columnfirst premier nom de la table
+     * @param columnsecond deuxieme argument de la table
+     * @return String de la requete formuler pouvant être ajouté
+     */
+    public FullOuterJoin fullOuterJoin(String tablearg, String columnfirst, String columnsecond){
+<span class="fc" id="L103">        return new FullOuterJoin(tablearg,columnfirst,columnsecond);</span>
+    }
+
+    /**
+     * Fonction appeller pour cree et ajouter un argument DESC à la requête SQL.
+     * @param tablearg arguments  de la table a join
+     * @param columnfirst premier nom de la table
+     * @param columnsecond deuxieme argument de la table
+     * @return String de la requete formuler pouvant être ajouté
+     */
+    public InnerJoin innerJoin(String tablearg, String columnfirst, String columnsecond){
+<span class="fc" id="L114">        return new InnerJoin(tablearg,columnfirst,columnsecond);</span>
+    }
+
+    /**
+     * Permet la création d'un objet LEFT JOIN de l'exterieur de la librairie
+     * Il pourra donc par la suite être ajouté à la requête
+     * @param columnfirst premier nom de la table
+     * @param columnsecond deuxieme argument de la table
+     * @return
+     */
+    public LeftJoin leftJoin(String tablearg, String columnfirst, String columnsecond){
+<span class="fc" id="L125">        return new LeftJoin(tablearg,columnfirst,columnsecond);</span>
+    }
+
+    /**
+     * Permet la création d'un objet RIGHT JOIN de l'exterieur de la librairie
+     * Il pourra donc par la suite être ajouté à la requête
+     * @param tablearg Tous les noms de colonnes de la table
+     * @param columnfirst premier nom de colonne (Argument à gauche JOIN)
+     * @param columnsecond second nom de colonne (Argument à droite du JOIN
+     * @return Retourne une string formant la partie RIGHT JOIN de la requête
+     */
+    public RightJoin rightJoin(String tablearg, String columnfirst, String columnsecond){
+<span class="fc" id="L137">        return new RightJoin(tablearg,columnfirst,columnsecond);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
