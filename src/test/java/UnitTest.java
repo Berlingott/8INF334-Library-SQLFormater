@@ -1,4 +1,4 @@
-import SQLFormater.Querry.Querry;
+import SQLFormater.Querry.*;
 import SQLFormater.Querry.Select;
 import SQLFormater.Querry.Table;
 import SQLFormater.SQLFormater;
