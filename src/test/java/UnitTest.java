@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Requête:
  * Résultat attendu:
+ * e
  */
 public class UnitTest {
     /**
